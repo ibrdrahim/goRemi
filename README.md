@@ -1,4 +1,4 @@
 # goRemi
 prototype for playing card game
 
-![Alt text](https://monosnap.com/file/niwAEvyuH20702Ec1mwk57z2PzBTMm.png)
+![Alt text](https://monosnap.com/file/b7E6WgJ3clhCRFjsTbAyyhZocMoWlm.png)
