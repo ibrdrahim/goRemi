@@ -26,16 +26,7 @@ func main() {
 	cDeck.Show()
 
 	// initialze player
-
-	players := goRemi.Players{}
-
-	players.Register(0, "Ibrahim")
-
-	players.Register(1, "Computer 1")
-
-	players.Register(2, "Computer 2")
-
-	players.Register(3, "Computer 3")
+	players := goRemi.Register([]string{"Ibrahim"}, 3)
 
 	// draw card from deck
 	for index := range players {
