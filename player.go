@@ -6,9 +6,15 @@ import (
 
 // Player struct
 type Player struct {
-	Name  string
-	Score float64
-	Hand  []Card
+	Name     string
+	Score    float64
+	LastPlay Card
+	Hand     []Card
+}
+
+// Less : sort player
+func (p Players) Less(i, j int) bool {
+	return p[i].Score < p[j].Score
 }
 
 // DrawCards : Draw card from deck
@@ -23,7 +29,11 @@ func (p *Player) DrawCards(deck *Deck, numberOfDraw int) {
 // ThrowCards : Return card to deck
 func (p *Player) ThrowCards(cardIndex int, deck *Deck) {
 	deck.AddCard(p.Hand[cardIndex])
+	p.LastPlay = p.Hand[len(p.Hand)-1]
 	p.Hand = p.Hand[:len(p.Hand)-1]
+
+	var cName, cLevel = p.LastPlay.Info()
+	fmt.Printf("\n\n%s Play %s %s", p.Name, cLevel, cName)
 }
 
 // ShowHand : show human readable info of cards in player hand
@@ -31,10 +41,12 @@ func (p Player) ShowHand() {
 	for i := 0; i < len(p.Hand); i++ {
 
 		var cName, cLevel = p.Hand[i].Info()
-		fmt.Printf("%v %v", cLevel, cName)
+		fmt.Print("┌───┐\n")
+		fmt.Printf("|%v %v|\n", cLevel, cName)
+		fmt.Print("└───┘\n")
 
 		if i < len(p.Hand)-1 {
-			fmt.Printf(",")
+			//fmt.Printf(",")
 		}
 
 	}

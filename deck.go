@@ -34,7 +34,7 @@ func (deck Deck) Shuffle() {
 func (deck Deck) Show() {
 	for i := 0; i <= len(deck)-1; i++ {
 		var cName, cLevel = deck[i].Info()
-		fmt.Printf("%v %v", cLevel, cName)
+		fmt.Printf("%s %s", cLevel, cName)
 
 		if i < len(deck)-1 {
 			fmt.Printf(",")

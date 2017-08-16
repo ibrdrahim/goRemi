@@ -37,13 +37,13 @@ func (c Card) Info() (string, string) {
 
 	switch c.number {
 	case 11:
-		cardName = "Jack"
+		cardName = "J"
 	case 12:
-		cardName = "Queen"
+		cardName = "Q"
 	case 13:
-		cardName = "King"
+		cardName = "K"
 	case 14:
-		cardName = "Ace"
+		cardName = "A"
 	default:
 		cardName = fmt.Sprint(c.number)
 	}
