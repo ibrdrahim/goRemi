@@ -15,14 +15,14 @@ type Player struct {
 func (p *Player) DrawCards(deck *Deck, numberOfDraw int) {
 	fmt.Printf("%s Draw %d card(s)\n", p.Name, numberOfDraw)
 	// draw card(s) from deck
-	draws := deck.Draw(numberOfDraw)
+	draws := (*deck).Draw(numberOfDraw)
 	sortCard(draws)
-	p.Hand = draws
+	p.Hand = append(p.Hand, draws...)
 }
 
 // ThrowCards : Return card to deck
-func (p *Player) ThrowCards(deck *Deck) {
-	deck.AddCard(p.Hand[len(p.Hand)-1])
+func (p *Player) ThrowCards(cardIndex int, deck *Deck) {
+	deck.AddCard(p.Hand[cardIndex])
 	p.Hand = p.Hand[:len(p.Hand)-1]
 }
 
@@ -46,14 +46,15 @@ type Players []Player
 // Register : Register Player
 func Register(pl []string, numberOfAI int) Players {
 
-	players := make(Players, len(pl))
+	var numberOfPlayers = len(pl) + numberOfAI
+	players := make(Players, numberOfPlayers)
 
-	for index := range pl {
-		players = append(players, Player{Name: pl[index], Score: 0})
-	}
-
-	for idx := 0; idx < numberOfAI; idx++ {
-		players = append(players, Player{Name: fmt.Sprintf("Computer %d", idx+1), Score: 0})
+	for index := 0; index < len(pl)+numberOfAI; index++ {
+		if index <= len(pl)-1 {
+			players[index] = Player{Name: pl[index], Score: 0}
+		} else {
+			players[index] = Player{Name: fmt.Sprintf("Computer %d", index), Score: 0}
+		}
 	}
 
 	return players
