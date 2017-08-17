@@ -1,7 +1,9 @@
 package goRemi
 
 import (
+	"bufio"
 	"fmt"
+	"os"
 )
 
 // Cangkulan : Cangkulan The Game
@@ -11,9 +13,9 @@ import (
 // 4. start playing from player 1 (clockwise)
 // 5. each player put one card with the same flag as the card on the table
 // 6. if player doesnt have card with the same flag draw card from deck until player get the card with the same flag
-//  7.a. if deck doesnt have any card, draw card from the top of the table
-// 8. after all player throw card to the table, compare players card, player with higher number win the round and get the score
-// 9. repeat 5-8 until deck is empty
+//  6.a. if deck doesnt have any card, draw card from the top of the table
+// 7. after all player throw card to the table, compare players card, player with higher number win the round and get the score
+// 8. repeat 5-8 until deck is empty
 type Cangkulan struct {
 	Deck    Deck
 	Field   Deck
@@ -21,9 +23,9 @@ type Cangkulan struct {
 }
 
 // InitGame : create new game instance
-func (c *Cangkulan) InitGame(numberOfPlayers int) {
+func (c *Cangkulan) InitGame(playerName string, numberOfPlayers int) {
 	fmt.Printf("\n\n------- Register Player -------\n")
-	c.Players = Register([]string{"ibrahim"}, 3)
+	c.Players = Register([]string{playerName}, numberOfPlayers)
 	// init Deck , fill deck with cards
 	fmt.Printf("\n\n------- Preparing Deck -------\n")
 	c.Deck = InitDeck()
@@ -70,13 +72,56 @@ func (c *Cangkulan) StartGame() {
 				// select first card for last round winner
 				if round > 0 && index == 0 {
 					// throw card with smalest symbol and number
-					c.Players[index].ThrowCards(0, &c.Field)
-					//playerTurn = false
+					if c.Players[index].AI == false {
+
+						fmt.Printf("\n\n-------%s You Win This Round Select Any Card-------\n", c.Players[index].Name)
+
+						var cardSelect int
+						var playerInput = true
+
+						for playerInput {
+							fmt.Print("Enter Card Position: ")
+							fmt.Scan(&cardSelect)
+							if cardSelect-1 < 0 || cardSelect-1 > (len(c.Players[index].Hand)-1) {
+								println("Invalid card index")
+							} else {
+								c.Players[index].ThrowCards(cardSelect-1, &c.Field)
+								playerInput = false
+							}
+						}
+
+					} else {
+						c.Players[index].ThrowCards(0, &c.Field)
+					}
 					break
 				} else {
+
 					for cIdx := range c.Players[index].Hand {
 						if c.Players[index].Hand[cIdx].symbol == c.Field[len(c.Field)-1].symbol {
-							c.Players[index].ThrowCards(cIdx, &c.Field)
+
+							if c.Players[index].AI == false {
+								var cardSelect int
+								var playerInput = true
+								for playerInput {
+									fmt.Print("Enter Card Position: ")
+									fmt.Scan(&cardSelect)
+									if cardSelect-1 < 0 || cardSelect-1 > (len(c.Players[index].Hand)-1) {
+										println("Invalid card index")
+									} else {
+										if c.Players[index].Hand[cardSelect-1].symbol == c.Field[len(c.Field)-1].symbol {
+											c.Players[index].ThrowCards(cardSelect-1, &c.Field)
+											playerInput = false
+										} else {
+											fmt.Println("Cannot use this card, use card with same symbol")
+										}
+									}
+
+								}
+
+							} else {
+								c.Players[index].ThrowCards(cIdx, &c.Field)
+							}
+
 							playerTurn = false
 							break
 						}
@@ -85,6 +130,11 @@ func (c *Cangkulan) StartGame() {
 					// Draw a new card until player have playable card
 					for playerTurn {
 
+						if c.Players[index].AI == false {
+							fmt.Print("You dont have any playable card\n")
+							fmt.Print("Press 'Enter' to draw a new card")
+							bufio.NewReader(os.Stdin).ReadBytes('\n')
+						}
 						if len(c.Deck) > 0 {
 
 							fmt.Println("\n\n-------Draw-------")
@@ -128,7 +178,7 @@ func (c *Cangkulan) StartGame() {
 		var biggestHand = c.Players[0].LastPlay
 		var roundWinnerIdx = 0
 		for index := range c.Players {
-			if IsCardHigher(biggestHand, c.Players[index].LastPlay) {
+			if IsCardHigher(c.Players[index].LastPlay, biggestHand) {
 				biggestHand = c.Players[index].LastPlay
 				roundWinnerIdx = index
 			}
@@ -149,8 +199,6 @@ func (c *Cangkulan) StartGame() {
 					newCounter = newCounter + 1
 				}
 			}
-
-			fmt.Println(c.Players)
 
 		}
 	}

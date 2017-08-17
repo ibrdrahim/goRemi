@@ -10,6 +10,7 @@ type Player struct {
 	Score    float64
 	LastPlay Card
 	Hand     []Card
+	AI       bool // false player, true ai
 }
 
 // Less : sort player
@@ -28,9 +29,15 @@ func (p *Player) DrawCards(deck *Deck, numberOfDraw int) {
 
 // ThrowCards : Return card to deck
 func (p *Player) ThrowCards(cardIndex int, deck *Deck) {
+
+	if cardIndex < 0 || cardIndex > (len(p.Hand)-1) {
+		println("Invalid card index")
+		return
+	}
+
 	deck.AddCard(p.Hand[cardIndex])
-	p.LastPlay = p.Hand[len(p.Hand)-1]
-	p.Hand = p.Hand[:len(p.Hand)-1]
+	p.LastPlay = p.Hand[cardIndex]
+	p.Hand = append(p.Hand[:cardIndex], p.Hand[cardIndex+1:]...)
 
 	var cName, cLevel = p.LastPlay.Info()
 	fmt.Printf("\n\n%s Play %s %s", p.Name, cLevel, cName)
@@ -41,6 +48,7 @@ func (p Player) ShowHand() {
 	for i := 0; i < len(p.Hand); i++ {
 
 		var cName, cLevel = p.Hand[i].Info()
+		fmt.Printf("Card Index %d \n", i+1)
 		fmt.Print("┌───┐\n")
 		fmt.Printf("|%v %v|\n", cLevel, cName)
 		fmt.Print("└───┘\n")
@@ -63,9 +71,9 @@ func Register(pl []string, numberOfAI int) Players {
 
 	for index := 0; index < len(pl)+numberOfAI; index++ {
 		if index <= len(pl)-1 {
-			players[index] = Player{Name: pl[index], Score: 0}
+			players[index] = Player{Name: pl[index], Score: 0, AI: false}
 		} else {
-			players[index] = Player{Name: fmt.Sprintf("Computer %d", index), Score: 0}
+			players[index] = Player{Name: fmt.Sprintf("Computer %d", index), Score: 0, AI: true}
 		}
 	}
 
