@@ -13,4 +13,4 @@ Cangkulan Game Rules
 9. continue to play from player who win from last round, player who win last round can choose any card to play first 
 10. repeat 5-9 until one of players doesnt have any more card
 
-![Alt text](https://monosnap.com/file/HGkQ2e22NELKt9wQLfzcq31JBXEAfD.png)
+http://take.ms/JbjjL
