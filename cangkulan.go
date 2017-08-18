@@ -54,7 +54,9 @@ func (c *Cangkulan) StartGame() {
 		// draw card
 		fmt.Println("\n\n-------Draw-------")
 		c.Players[index].DrawCards(&c.Deck, 7)
-		c.Players[index].ShowHand()
+		if c.Players[index].AI == false {
+			c.Players[index].ShowHand()
+		}
 	}
 
 	var round = 0
@@ -65,8 +67,10 @@ func (c *Cangkulan) StartGame() {
 
 			fmt.Println("\n\n-------FIELD-------")
 			c.Field.Show()
-			fmt.Printf("\n\n-------%s Play Card-------\n", c.Players[index].Name)
-			c.Players[index].ShowHand()
+			fmt.Printf("\n\n-------%s Turn-------\n", c.Players[index].Name)
+			if c.Players[index].AI == false {
+				c.Players[index].ShowHand()
+			}
 
 			var playerTurn = true
 			for playerTurn {
@@ -76,7 +80,7 @@ func (c *Cangkulan) StartGame() {
 					// throw card with smalest symbol and number
 					if c.Players[index].AI == false {
 
-						fmt.Printf("\n\n-------%s You Win This Round Select Any Card-------\n", c.Players[index].Name)
+						fmt.Printf("\n\n-------%s You Win This Round Select Any Card-------", c.Players[index].Name)
 
 						var cardSelect int
 						var playerInput = true
@@ -93,6 +97,8 @@ func (c *Cangkulan) StartGame() {
 						}
 
 					} else {
+
+						fmt.Printf("\n\n-------%s You Win This Round -------\n", c.Players[index].Name)
 						c.Players[index].ThrowCards(0, &c.Field)
 					}
 					break
@@ -142,7 +148,10 @@ func (c *Cangkulan) StartGame() {
 							fmt.Println("\n\n-------Draw-------")
 							c.Players[index].DrawCards(&c.Deck, 1)
 							fmt.Printf("\n\n-------%s Hand-------\n", c.Players[index].Name)
-							c.Players[index].ShowHand()
+
+							if c.Players[index].AI == false {
+								c.Players[index].ShowHand()
+							}
 
 							if c.Players[index].Hand[len(c.Players[index].Hand)-1].symbol == c.Field[len(c.Field)-1].symbol {
 								c.Players[index].ThrowCards(len(c.Players[index].Hand)-1, &c.Field)
@@ -156,7 +165,10 @@ func (c *Cangkulan) StartGame() {
 							fmt.Println("\n\n-------Penalty Draw From FIELD-------")
 							c.Players[index].DrawCards(&c.Field, 1)
 							fmt.Printf("\n\n-------%s Hand-------\n", c.Players[index].Name)
-							c.Players[index].ShowHand()
+
+							if c.Players[index].AI == false {
+								c.Players[index].ShowHand()
+							}
 
 							playerTurn = false
 							break
@@ -187,8 +199,6 @@ func (c *Cangkulan) StartGame() {
 		}
 
 		if roundWinnerIdx > 0 {
-
-			fmt.Printf(" Winner : %d\n", roundWinnerIdx)
 			var tempPlayer = make(Players, len(c.Players))
 			copy(tempPlayer, c.Players)
 			var newCounter = 0

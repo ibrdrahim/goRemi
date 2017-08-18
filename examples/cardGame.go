@@ -11,10 +11,17 @@ func main() {
 	// initialize Deck
 	var newGame goRemi.Cangkulan
 	var playerName string
+	playerNumber := 0
 
 	fmt.Print("Enter Player Name (without space) : ")
 	fmt.Scan(&playerName)
-	newGame.InitGame(playerName, 2)
+
+	for (playerNumber < 1) || (playerNumber > 3) {
+		fmt.Print("Enter Number of AI (min 1 , max 3) : ")
+		fmt.Scan(&playerNumber)
+	}
+
+	newGame.InitGame(playerName, playerNumber)
 
 	newGame.StartGame()
 
