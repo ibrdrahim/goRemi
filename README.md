@@ -15,3 +15,5 @@ Cangkulan Game Rules
 
 Preview :
 http://take.ms/JbjjL
+
+![Alt text](https://monosnap.com/file/HGkQ2e22NELKt9wQLfzcq31JBXEAfD.png)
