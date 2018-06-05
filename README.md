@@ -14,6 +14,4 @@ Cangkulan Game Rules
 10. repeat 5-9 until one of players doesnt have any more card
 
 Preview :
-http://take.ms/JbjjL
-
-![Alt text](https://monosnap.com/file/HGkQ2e22NELKt9wQLfzcq31JBXEAfD.png)
+![Alt text](https://media.giphy.com/media/3gYUN9vyM48zC0fH29/giphy.gif)
