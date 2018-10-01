@@ -1,4 +1,10 @@
 # goRemi
+[![Go Report Card](https://goreportcard.com/badge/github.com/ibrdrahim/goRemi)](https://goreportcard.com/report/github.com/ibrdrahim/goRemi) 
+[![Release](https://img.shields.io/badge/release-v0.0.0.1-orange.svg)](https://github.com/ibrdrahim/goRemi/releases)
+[![Status](https://img.shields.io/badge/status-beta-green.svg)](https://github.com/ibrdrahim/goRemi/releases)
+[![Go](https://img.shields.io/badge/go-v1.10.x-blue.svg)](https://gitter.im/ibrdrahim/goRemi)
+[![GitHub license](https://img.shields.io/badge/license-MIT-red.svg)](https://github.com/ibrdrahim/goRemi/blob/master/LICENSE)
+
 prototype for playing card game
 
 Cangkulan Game Rules
